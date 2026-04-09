@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Shreeney Ajmeri <ajmerishreeney@gmail.com>
+ *
+ * SPDX-License-Identifier: BSD-2-Clause
+ */
+
 import sys
 import re
 import glob
