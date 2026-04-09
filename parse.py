@@ -4,7 +4,7 @@ import glob
 from html import escape
 import os
 
-COLUMNS = ["Graphics", "Networking", "Audio", "Storage", "USB Ports"]
+COLUMNS = ["Graphics", "Networking", "Audio", "USB Ports"]
 
 
 def format_score(value):
@@ -17,16 +17,22 @@ def get_rows():
         try:
             model, ranking, _, _ = parse_file(filepath)
             if model and "/" in ranking:
-                earned = float(ranking.split('/')[0])
-                data_list.append({
-                    "name": model,
-                    "score_str": ranking,
-                    "earned": earned
-                })
+                parts = ranking.split('/')
+                earned = float(parts[0])
+                possible = float(parts[1])
+                if earned == possible and possible > 0:
+                    data_list.append({
+                        "name": model,
+                        "score_str": ranking,
+                        "earned": earned
+                    })
         except Exception:
             continue
 
     data_list.sort(key=lambda x: x['earned'], reverse=True)
+
+    for item in data_list:
+        print(f"<tr><td>{escape(item['name'])}</td><td>{item['score_str']}</td></tr>")
 
     current_rank = 0
     last_score = None
